@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.liuhe.constraintlayoutdemo.KotlinActivity">
+
+    <Button
+        android:id="@+id/btn_A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--constraintXXX：指定当前控件需要设置约束的属性部分。如constraintLeft表示对当前控件的左边进行约束设置。-->
+    <!--toXXXOf：其指定的内容是作为当前控件设置约束需要依赖的控件或父容器（可以理解为设置约束的参照物）。
+        并通过XXX指定被依赖对象用于参考的属性。如toLeftOf="parent" ：表示当前控件相对于父容器的左边进行约束设置。-->
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="在A下方,与A左对齐"
+        app:layout_constraintLeft_toLeftOf="@id/btn_A"
+        app:layout_constraintTop_toBottomOf="@id/btn_A" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="在A上方,与A左对齐"
+        app:layout_constraintBottom_toTopOf="@id/btn_A"
+        app:layout_constraintLeft_toLeftOf="@id/btn_A" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:text="baseLine左边对齐"
+        app:layout_constraintBaseline_toBaselineOf="@id/btn_A"
+        app:layout_constraintRight_toLeftOf="@id/btn_A" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:text="baseLine右边底部对齐"
+        app:layout_constraintBaseline_toBaselineOf="@id/btn_A"
+        app:layout_constraintLeft_toRightOf="@id/btn_A" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="与A水平居中对齐"
+        app:layout_constraintBottom_toTopOf="@id/btn_A"
+        app:layout_constraintLeft_toLeftOf="@id/btn_A"
+        app:layout_constraintRight_toRightOf="@id/btn_A" />
+</android.support.constraint.ConstraintLayout>
