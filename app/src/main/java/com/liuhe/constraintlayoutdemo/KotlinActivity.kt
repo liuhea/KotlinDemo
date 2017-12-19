@@ -8,24 +8,31 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import com.liuhe.constraintlayoutdemo.Utils.Companion.loadImage
+import com.liuhe.constraintlayoutdemo.Utils.Companion.toast
 import kotlinx.android.synthetic.main.activity_rcy.*
 import kotlinx.android.synthetic.main.item_rcy_case.view.*
 
-class KotlinActivity : AppCompatActivity() {
+class KotlinActivity : AppCompatActivity(), OnItemClickListener {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rcy)
         var layoutManager = LinearLayoutManager(this)
         rcy.layoutManager = layoutManager
-        rcy.adapter = RcyAdapter(this)
+        val rcyAdapter = RcyAdapter(context = this, listener = this)
+        rcy.adapter = rcyAdapter
+    }
+
+
+    override fun onItemClickListener(position: Int) {
+        toast("click->" + position)
     }
 }
 
 
-class RcyAdapter(var context: Context) : RecyclerView.Adapter<RcyAdapter.Holder>() {
+class RcyAdapter(var context: Context, private val listener: OnItemClickListener) : RecyclerView.Adapter<RcyAdapter.Holder>() {
 
     override fun getItemCount(): Int {
         return 15
@@ -37,17 +44,23 @@ class RcyAdapter(var context: Context) : RecyclerView.Adapter<RcyAdapter.Holder>
     }
 
     override fun onBindViewHolder(holder: Holder?, position: Int) {
-        val case = Case(title = "这是标题:" + position + 1, logoUrl = "https://shejijia-uat.oss-cn-beijing.aliyuncs.com/sjj/1512641479077jphzd868uxqad5j.jpg")
-        holder?.logo?.let { Utils.loadImage(context,it, url = case.logoUrl) }
-        holder?.title?.text = case.title
+        val case = Case(title = "这是标题:" + (position + 1), logoUrl = "https://shejijia-uat.oss-cn-beijing.aliyuncs.com/sjj/1512641479077jphzd868uxqad5j.jpg")
+        holder?.itemView?.img_demo2_logo.let { it?.let { it1 -> context.loadImage(it1, url = case.logoUrl) } }
+        holder?.itemView?.txt_demo2_title?.text = case.title
+        holder?.itemView?.setOnClickListener({
+            listener?.onItemClickListener(position)
+        })
 
     }
 
-    class Holder(view: View) : RecyclerView.ViewHolder(view) {
-        var logo: ImageView = view.img_demo2_logo
-        var title: TextView = view.txt_demo2_title
-    }
+    class Holder(view: View) : RecyclerView.ViewHolder(view)
 }
 
+//val listener: OnItemClickListener? = null
+
 class Case(@JvmField var title: String, @JvmField var logoUrl: String)
+
+interface OnItemClickListener {
+    fun onItemClickListener(position: Int)
+}
 
